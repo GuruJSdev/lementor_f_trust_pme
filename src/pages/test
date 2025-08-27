@@ -1,0 +1,407 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, PieChart, Pie, Cell, Area, AreaChart } from 'recharts';
+import { TrendingUp, TrendingDown, AlertTriangle, CheckCircle, DollarSign, Users, Target, Shield } from 'lucide-react';
+
+const Dashboard = () => {
+  const [selectedTimeframe, setSelectedTimeframe] = useState('12M');
+  
+  // Données de performance par dimension
+  const dimensionData = [
+    { dimension: 'Financière', score: 87.5, note: 'B+', color: '#10b981', target: 85 },
+    { dimension: 'Opérationnelle', score: 46.5, note: 'C', color: '#f59e0b', target: 70 },
+    { dimension: 'Humaine', score: 95.0, note: 'A', color: '#3b82f6', target: 80 },
+    { dimension: 'Impact ESG', score: 70.0, note: 'B', color: '#8b5cf6', target: 75 }
+  ];
+
+  // Métriques clés avec évolution
+  const keyMetrics = [
+    { 
+      label: 'Score Global', 
+      value: '74.9%', 
+      change: '+2.3%', 
+      trend: 'up', 
+      icon: Target,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-50' 
+    },
+    { 
+      label: 'Rentabilité Nette', 
+      value: '25.0%', 
+      change: '+3.2%', 
+      trend: 'up', 
+      icon: TrendingUp,
+      color: 'text-green-600',
+      bgColor: 'bg-green-50' 
+    },
+    { 
+      label: 'Ratio Endettement', 
+      value: '0.30', 
+      change: '-0.05', 
+      trend: 'up', 
+      icon: Shield,
+      color: 'text-green-600',
+      bgColor: 'bg-green-50' 
+    },
+    { 
+      label: 'Taux Rotation RH', 
+      value: '5%', 
+      change: '-2%', 
+      trend: 'up', 
+      icon: Users,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-50' 
+    }
+  ];
+
+  // Données d'évolution temporelle
+  const evolutionData = [
+    { mois: 'Jan', rentabilite: 22, endettement: 0.35, tresorerie: 4.2, scoreGlobal: 71 },
+    { mois: 'Fév', rentabilite: 23, endettement: 0.33, tresorerie: 4.5, scoreGlobal: 72 },
+    { mois: 'Mar', rentabilite: 21, endettement: 0.32, tresorerie: 4.8, scoreGlobal: 70 },
+    { mois: 'Avr', rentabilite: 24, endettement: 0.31, tresorerie: 5.1, scoreGlobal: 73 },
+    { mois: 'Mai', rentabilite: 25, endettement: 0.30, tresorerie: 5.3, scoreGlobal: 74 },
+    { mois: 'Juin', rentabilite: 26, endettement: 0.29, tresorerie: 5.5, scoreGlobal: 75 }
+  ];
+
+  // Benchmark sectoriel
+  const benchmarkData = [
+    { indicateur: 'Rentabilité', entreprise: 25, secteur: 18, excellence: 30 },
+    { indicateur: 'Endettement', entreprise: 30, secteur: 45, excellence: 25 },
+    { indicateur: 'Innovation R&D', entreprise: 8, secteur: 5, excellence: 10 },
+    { indicateur: 'Rétention RH', entreprise: 95, secteur: 82, excellence: 90 },
+    { indicateur: 'Impact ESG', entreprise: 70, secteur: 55, excellence: 85 }
+  ];
+
+  // Matrice des risques
+  const risksMatrix = [
+    { 
+      risque: 'Dépendance Clientèle', 
+      probabilite: 'Élevée', 
+      impact: 'Critique', 
+      score: 85,
+      niveau: 'danger',
+      mitigation: 'Plan diversification urgent'
+    },
+    { 
+      risque: 'Stagnation CA', 
+      probabilite: 'Moyenne', 
+      impact: 'Élevé', 
+      score: 65,
+      niveau: 'warning',
+      mitigation: 'Stratégie commerciale offensive'
+    },
+    { 
+      risque: 'Concurrence Tech', 
+      probabilite: 'Moyenne', 
+      impact: 'Moyen', 
+      score: 45,
+      niveau: 'info',
+      mitigation: 'Innovation continue'
+    },
+    { 
+      risque: 'Réglementaire', 
+      probabilite: 'Faible', 
+      impact: 'Moyen', 
+      score: 25,
+      niveau: 'success',
+      mitigation: 'Veille réglementaire'
+    }
+  ];
+
+  // Alertes intelligentes
+  const alerts = [
+    {
+      type: 'critical',
+      title: 'Dépendance Clientèle Critique',
+      message: 'Client principal représente 40% du CA - Seuil de risque dépassé',
+      action: 'Plan de diversification immédiat requis',
+      icon: AlertTriangle,
+      color: 'border-red-500 bg-red-50 text-red-800'
+    },
+    {
+      type: 'warning', 
+      title: 'Modèle Économique Non Formalisé',
+      message: 'Absence de formalisation des canaux de revenus multiples',
+      action: 'Consultant stratégie recommandé sous 30 jours',
+      icon: TrendingDown,
+      color: 'border-orange-500 bg-orange-50 text-orange-800'
+    },
+    {
+      type: 'success',
+      title: 'Excellence Capital Humain',
+      message: 'Score A (95%) - Équipe stable avec leadership visionnaire',
+      action: 'Capitaliser sur cet atout pour transformation',
+      icon: CheckCircle,
+      color: 'border-green-500 bg-green-50 text-green-800'
+    }
+  ];
+
+  // Données ESG détaillées
+  const esgData = [
+    { critere: 'Environnemental', score: 75, target: 80 },
+    { critere: 'Social', score: 68, target: 75 },
+    { critere: 'Gouvernance', score: 85, target: 85 },
+    { critere: 'Innovation', score: 78, target: 80 },
+    { critere: 'Éthique', score: 72, target: 75 },
+    { critere: 'Conformité', score: 88, target: 85 }
+  ];
+
+  const getRiskColor = (niveau) => {
+    const colors = {
+      danger: 'bg-red-100 text-red-800 border-red-200',
+      warning: 'bg-orange-100 text-orange-800 border-orange-200', 
+      info: 'bg-blue-100 text-blue-800 border-blue-200',
+      success: 'bg-green-100 text-green-800 border-green-200'
+    };
+    return colors[niveau] || colors.info;
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+      <div className="max-w-8xl mx-auto space-y-8">
+        
+        {/* Header Professionnel */}
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                Trust PME Analytics Dashboard
+              </h1>
+              <p className="text-slate-600 text-lg mt-2">Évaluation Complète - Entreprise Technologique</p>
+              <div className="flex items-center mt-4 space-x-4">
+                <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                  Score Global: 74.9% (Note B)
+                </span>
+                <span className="px-4 py-2 bg-slate-100 text-slate-700 rounded-full text-sm">
+                  Dernière MAJ: {new Date().toLocaleDateString('fr-FR')}
+                </span>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-bold text-slate-800">FOHI</div>
+              <div className="text-sm text-slate-600 space-y-1">
+                <div>Financier: <span className="font-semibold text-green-600">B+</span></div>
+                <div>Opérationnel: <span className="font-semibold text-orange-500">C</span></div>
+                <div>Humain: <span className="font-semibold text-blue-600">A</span></div>
+                <div>Impact: <span className="font-semibold text-purple-600">B</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* KPI Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {keyMetrics.map((metric, index) => {
+            const IconComponent = metric.icon;
+            return (
+              <div key={index} className={`${metric.bgColor} rounded-xl shadow-lg border border-slate-200 p-6 hover:shadow-xl transition-all duration-300`}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-slate-600 mb-1">{metric.label}</p>
+                    <p className={`text-3xl font-bold ${metric.color}`}>{metric.value}</p>
+                    <div className="flex items-center mt-2">
+                      {metric.trend === 'up' ? (
+                        <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
+                      ) : (
+                        <TrendingDown className="w-4 h-4 text-red-500 mr-1" />
+                      )}
+                      <span className={`text-sm font-medium ${metric.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
+                        {metric.change}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={`p-3 rounded-xl ${metric.color.replace('text-', 'bg-').replace('-600', '-100')}`}>
+                    <IconComponent className={`w-6 h-6 ${metric.color}`} />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Performance par Dimension */}
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-slate-800">Performance par Dimension</h2>
+            <div className="flex space-x-2">
+              {['6M', '12M', '24M'].map((period) => (
+                <button
+                  key={period}
+                  onClick={() => setSelectedTimeframe(period)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    selectedTimeframe === period
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {period}
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={dimensionData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="dimension" />
+                  <YAxis domain={[0, 100]} />
+                  <Tooltip 
+                    formatter={(value) => [`${value}%`, 'Score']}
+                    labelFormatter={(label) => `Dimension ${label}`}
+                  />
+                  <Bar dataKey="score" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="target" fill="#e5e7eb" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            
+            <div className="space-y-4">
+              {dimensionData.map((dim, index) => (
+                <div key={index} className="border border-slate-200 rounded-lg p-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-semibold text-slate-700">{dim.dimension}</span>
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-2 py-1 rounded text-sm font-bold text-white`} style={{backgroundColor: dim.color}}>
+                        {dim.note}
+                      </span>
+                      <span className="text-lg font-bold text-slate-800">{dim.score}%</span>
+                    </div>
+                  </div>
+                  <div className="w-full bg-slate-200 rounded-full h-2">
+                    <div 
+                      className="h-2 rounded-full transition-all duration-500"
+                      style={{backgroundColor: dim.color, width: `${dim.score}%`}}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Évolution Temporelle & Benchmark */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Évolution */}
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Évolution des Performances</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={evolutionData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="mois" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Area type="monotone" dataKey="scoreGlobal" stackId="1" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
+                <Area type="monotone" dataKey="rentabilite" stackId="2" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Benchmark */}
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Benchmark Sectoriel</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={benchmarkData} layout="horizontal">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" domain={[0, 100]} />
+                <YAxis dataKey="indicateur" type="category" width={100} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="entreprise" fill="#3b82f6" name="Entreprise" />
+                <Bar dataKey="secteur" fill="#94a3b8" name="Secteur" />
+                <Bar dataKey="excellence" fill="#10b981" name="Excellence" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* ESG Radar & Matrice des Risques */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* ESG */}
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Analyse ESG</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <RadarChart data={esgData}>
+                <PolarGrid />
+                <PolarAngleAxis dataKey="critere" />
+                <PolarRadiusAxis angle={30} domain={[0, 100]} />
+                <Radar name="Score Actuel" dataKey="score" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.3} />
+                <Radar name="Objectif" dataKey="target" stroke="#10b981" fill="transparent" strokeDasharray="5 5" />
+                <Legend />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Matrice des Risques */}
+          <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Matrice des Risques</h3>
+            <div className="space-y-3 max-h-80 overflow-y-auto">
+              {risksMatrix.map((risk, index) => (
+                <div key={index} className={`p-4 rounded-lg border-l-4 ${getRiskColor(risk.niveau)}`}>
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold">{risk.risque}</h4>
+                    <span className="text-sm font-bold">{risk.score}%</span>
+                  </div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span>Probabilité: {risk.probabilite}</span>
+                    <span>Impact: {risk.impact}</span>
+                  </div>
+                  <p className="text-xs italic">{risk.mitigation}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Alertes Intelligentes */}
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6">
+          <h3 className="text-xl font-bold text-slate-800 mb-6">Alertes & Recommandations Intelligentes</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {alerts.map((alert, index) => {
+              const IconComponent = alert.icon;
+              return (
+                <div key={index} className={`p-6 rounded-xl border-l-4 ${alert.color}`}>
+                  <div className="flex items-start space-x-3">
+                    <IconComponent className="w-5 h-5 mt-1 flex-shrink-0" />
+                    <div className="flex-1">
+                      <h4 className="font-bold mb-2">{alert.title}</h4>
+                      <p className="text-sm mb-3 opacity-90">{alert.message}</p>
+                      <div className="text-xs font-semibold uppercase tracking-wide">
+                        Action: {alert.action}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Footer Analytics */}
+        <div className="bg-slate-900 rounded-2xl shadow-xl p-6 text-white">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="text-2xl font-bold text-blue-400">93%</div>
+              <div className="text-sm text-slate-300">Fiabilité des Données</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-green-400">127</div>
+              <div className="text-sm text-slate-300">Indicateurs Analysés</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-purple-400">24/7</div>
+              <div className="text-sm text-slate-300">Monitoring Continu</div>
+            </div>
+          </div>
+          <div className="text-center mt-6 text-slate-400 text-sm">
+            Rapport généré par Trust PME Analytics • Conforme aux standards sectoriels 2024
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
