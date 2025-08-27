@@ -1608,7 +1608,7 @@
 
 import { AuthService } from "../services/auth"
 import { createScoring } from "../services/n8n"
-import { PmeService } from "../services/pme"
+// import { PmeService } from "../services/pme"
 
 export default {
 
