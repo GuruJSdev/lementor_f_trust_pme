@@ -164,7 +164,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '../stores/auth';
+// import { useAuthStore } from '../stores/auth';
 import Alert from '../components/Alert.vue';
 import {AuthService} from "../services/auth"
 
@@ -184,7 +184,7 @@ const errors = ref({
   confirmPassword: '',
 });
 
-const authStore = useAuthStore();
+// const authStore = useAuthStore();
 const router = useRouter();
 
 // Valide le mot de passe et sa confirmation
