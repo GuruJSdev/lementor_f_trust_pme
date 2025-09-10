@@ -8,7 +8,7 @@ export class AuthService {
 
     static async login(email = "", password = "") {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', {
+            const response = await axios.post('https://lementor-b-trust-pme-2.onrender.com/api/auth/login', {
                 email,
                 password,
             });
@@ -26,7 +26,7 @@ export class AuthService {
 
     static async register(userData: any) {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/register', userData);
+            const response = await axios.post('https://lementor-b-trust-pme-2.onrender.com/api/auth/register', userData);
 
             if (response) {
                 return response.data;
@@ -47,7 +47,7 @@ export class AuthService {
             if(!token){
                 router.push("login")
             }
-            const { data } = await axios.get('http://localhost:3000/api/auth/account', {
+            const { data } = await axios.get('https://lementor-b-trust-pme-2.onrender.com/api/auth/account', {
                 headers: { Authorization: `Bearer ${token}` }, // utile même avec l'interceptor
             });
             if(data){

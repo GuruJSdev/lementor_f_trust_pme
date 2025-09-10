@@ -57,7 +57,7 @@ export function createScoring(data:any) {
 let config = {
   method: 'post',
   maxBodyLength: Infinity,
-  url: 'http://localhost:3000/api/scoring',
+  url: 'https://lementor-b-trust-pme-2.onrender.com/api/scoring',
   headers: { 
     'Content-Type': 'application/json', 
     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -73,4 +73,38 @@ axios.request(config)
   console.log(error);
 });
 }
+
+
+
+export async function getRapport() {
+  try {
+    const config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'https://lementor-b-trust-pme-2.onrender.com/api/scoring',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      data: {}
+    };
+
+    // 🔹 await pour récupérer la réponse
+    const response = await axios.request(config);
+
+    // 🔹 Boucle sur les éléments
+    for (let index = 0; index < response.data.length; index++) {
+      let element = response.data[index].data;
+      // tu peux parser element si c'est une string JSON
+      // ex : element = JSON.parse(element)
+    }
+    return response.data;
+
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+
 

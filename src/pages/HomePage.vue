@@ -16,7 +16,7 @@
             <span>{{ account.email }}</span>
 
             <button class=" cursor-pointer bg-blue-500 text-teal-50 p-2 mx-2 rounded-sm"
-              @click="goToDashboard()">Dashboard</button>
+              @click="goToDashboard()">Rapport</button>
             <button class=" cursor-pointer bg-red-500 text-teal-50 p-2 mx-2 rounded-sm"
               @click="deconnexion()">Déconnexion</button>
           </div>
@@ -511,11 +511,20 @@
                   <select required v-model="formPme.statutLegal"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="">Choisir le statut</option>
-                    <option value="SARL">SARL</option>
-                    <option value="SA">SA</option>
-                    <option value="Coopérative">Coopérative</option>
-                    <option value="GIE">GIE</option>
+                    <option value="SARL">SARL (Société à Responsabilité Limitée)</option>
+                    <option value="SA">SA (Société Anonyme)</option>
+                    <option value="SAS">SAS (Société par Actions Simplifiée)</option>
+                    <option value="SNC">SNC (Société en Nom Collectif)</option>
+                    <option value="SCS">SCS (Société en Commandite Simple)</option>
+                    <option value="SCA">SCA (Société en Commandite par Actions)</option>
+                    <option value="SASU">SASU (Société par Actions Simplifiée Unipersonnelle)</option>
+                    <option value="EURL">EURL (Entreprise Unipersonnelle à Responsabilité Limitée)</option>
                     <option value="Entreprise Individuelle">Entreprise Individuelle</option>
+                    <option value="Auto-entrepreneur">Auto-entrepreneur / Micro-entreprise</option>
+                    <option value="Coopérative">Coopérative</option>
+                    <option value="Association">Association</option>
+                    <option value="GIE">GIE (Groupement d’Intérêt Économique)</option>
+                    <option value="ONG">ONG (Organisation Non Gouvernementale)</option>
                     <option value="Autre">Autre</option>
                   </select>
                   <p class="text-xs text-gray-500 mt-1">❓ Forme juridique inscrite au RCCM</p>
@@ -529,12 +538,27 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="">Sélectionner un secteur</option>
                     <option value="Agriculture">Agriculture</option>
+                    <option value="Agroalimentaire">Agroalimentaire</option>
                     <option value="Commerce">Commerce</option>
                     <option value="Services">Services</option>
                     <option value="Industrie">Industrie</option>
+                    <option value="Énergie">Énergie</option>
+                    <option value="Mines">Mines</option>
+                    <option value="Pétrole et Gaz">Pétrole et Gaz</option>
                     <option value="Transport">Transport</option>
-                    <option value="BTP">BTP</option>
+                    <option value="Logistique">Logistique</option>
+                    <option value="BTP">BTP (Bâtiment et Travaux Publics)</option>
+                    <option value="Immobilier">Immobilier</option>
                     <option value="Technologies">Technologies</option>
+                    <option value="Télécommunications">Télécommunications</option>
+                    <option value="Finance">Finance / Banque / Assurance</option>
+                    <option value="Santé">Santé</option>
+                    <option value="Éducation">Éducation / Formation</option>
+                    <option value="Tourisme">Tourisme / Hôtellerie / Restauration</option>
+                    <option value="Culture">Culture / Arts / Médias</option>
+                    <option value="Environnement">Environnement</option>
+                    <option value="Administration">Administration Publique</option>
+                    <option value="ONG">ONG / Organisations internationales</option>
                     <option value="Autre">Autre</option>
                   </select>
                 </div>
@@ -562,7 +586,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Nombre total d'employés <span class="text-red-500">*</span>
                   </label>
-                  <input type="0" min="0" required v-model="formPme.nombreEmployes"
+                  <input type="0" min="0" required v-model.number="formPme.nombreEmployes"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Employés permanents et temporaires actuels</p>
                 </div>
@@ -601,7 +625,7 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                   Description des activités principales
                 </label>
-                <textarea rows="3" maxlength="500" v-model="formPme.ex"
+                <textarea rows="3" maxlength="500"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="Décrivez vos produits, services et ce qui vous différencie..."></textarea>
                 <p class="text-xs text-gray-500 mt-1">❓ Maximum 500 caractères</p>
@@ -672,7 +696,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Chiffre d'affaires annuel (dernière année) <span class="text-red-500">*</span>
                   </label>
-                  <input type="0" min="0" required v-model="formPme.chiffreAffaires"
+                  <input type="0" min="0" required v-model.number="formPme.chiffreAffaires"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Total des ventes (hors taxes) dernière année fiscale</p>
                 </div>
@@ -681,7 +705,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Bénéfice net annuel <span class="text-red-500">*</span>
                   </label>
-                  <input type="0" required v-model="formPme.beneficeNet"
+                  <input type="0" required v-model.number="formPme.beneficeNet"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Résultat après charges et impôts</p>
                 </div>
@@ -692,7 +716,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Ratio Dettes / Capitaux propres (%)
                   </label>
-                  <input type="0" min="0" max="500" v-model="formPme.ratioDettes"
+                  <input type="0" min="0" max="500" v-model.number="formPme.ratioDettes"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ (Dettes totales / Capitaux propres) × 100</p>
                 </div>
@@ -701,7 +725,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Trésorerie disponible
                   </label>
-                  <input type="0" min="0" v-model="formPme.tresorerieDisponible"
+                  <input type="0" min="0" v-model.number="formPme.tresorerieDisponible"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Liquidités (caisse + banque) en fin d'exercice</p>
                 </div>
@@ -712,7 +736,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Délais moyens paiement clients (jours)
                   </label>
-                  <input type="0" min="0" v-model="formPme.delaiPaiementClients"
+                  <input type="0" min="0" v-model.number="formPme.delaiPaiementClients"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Nombre moyen de jours avant encaissement</p>
                 </div>
@@ -721,7 +745,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Délais moyens paiement fournisseurs (jours)
                   </label>
-                  <input type="0" min="0" v-model="formPme.delaiPaiementFournisseurs"
+                  <input type="0" min="0" v-model.number="formPme.delaiPaiementFournisseurs"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Nombre moyen de jours avant règlement</p>
                 </div>
@@ -732,7 +756,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Budget R&D / TIC (% du CA)
                   </label>
-                  <input type="0" min="0" max="100" step="0.1" v-model="formPme.budgetRD"
+                  <input type="0" min="0" max="100" step="0.1" v-model.number="formPme.budgetRD"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ % du CA investi en innovation/technologies</p>
                 </div>
@@ -741,7 +765,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Nouveaux produits/services (3 dernières années)
                   </label>
-                  <input type="0" min="0" v-model="formPme.nbProduitsLances"
+                  <input type="0" min="0" v-model.number="formPme.nbProduitsLances"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Nombre de lancements sur 3 ans</p>
                 </div>
@@ -752,7 +776,13 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Pertes sur les 3 dernières années ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="business_plan" value="non"
+                      <input type="radio" name="business_plan" value="true"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                      <span class="ml-2 text-sm text-gray-700">Oui</span>
+                    </label>
+
+                    <label class="flex items-center">
+                      <input type="radio" name="business_plan" value="false"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -763,7 +793,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Part CA du plus gros client (%)
                   </label>
-                  <input type="0" min="0" max="100"
+                  <input type="0" min="0" max="100" v-model.number="formPme.caClientPrincipal"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Concentration du risque client</p>
                 </div>
@@ -774,12 +804,12 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">CRM ou ERP pour la gestion ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="crm_erp" value="oui" v-model="formPme.crmOuErp"
+                      <input type="radio" name="crm_erp" :value="true" v-model="formPme.crmOuErp"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="crm_erp" value="non" v-model="formPme.crmOuErp"
+                      <input type="radio" name="crm_erp" :value="false" v-model="formPme.crmOuErp"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -791,12 +821,12 @@
                     ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="diversification" value="oui" v-model="formPme.diversification"
+                      <input type="radio" name="diversification" :value="true" v-model="formPme.diversification"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="diversification" value="non" v-model="formPme.diversification"
+                      <input type="radio" name="diversification" :value="false" v-model="formPme.diversification"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -807,12 +837,13 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Dépendance aux marchés publics ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="public_markets" value="oui" v-model="formPme.dependanceMarchesPublics"
+                      <input type="radio" name="public_markets" :value="true" v-model="formPme.dependanceMarchesPublics"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="public_markets" value="non" v-model="formPme.dependanceMarchesPublics"
+                      <input type="radio" name="public_markets" :value="false"
+                        v-model="formPme.dependanceMarchesPublics"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -824,13 +855,13 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Transformation digitale (3 ans) ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="digital_transformation" value="oui"
+                      <input type="radio" name="digital_transformation" :value="true"
                         v-model="formPme.investissementDigital"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="digital_transformation" value="non"
+                      <input type="radio" name="digital_transformation" :value="false"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -852,12 +883,12 @@
                 <span class="text-sm font-medium text-gray-700 min-w-fit">Manuel de procédures internes ?</span>
                 <div class="flex space-x-6">
                   <label class="flex items-center">
-                    <input type="radio" name="procedures_manual" value="oui" v-model="formPme.manuelProcedures"
+                    <input type="radio" name="procedures_manual" :value="true" v-model="formPme.manuelProcedures"
                       class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                     <span class="ml-2 text-sm text-gray-700">Oui</span>
                   </label>
                   <label class="flex items-center">
-                    <input type="radio" name="procedures_manual" value="non" v-model="formPme.manuelProcedures"
+                    <input type="radio" name="procedures_manual" :value="false" v-model="formPme.manuelProcedures"
                       class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                     <span class="ml-2 text-sm text-gray-700">Non</span>
                   </label>
@@ -948,19 +979,19 @@
               </div>
             </div>
 
-            <form class="space-y-6">
+            <div class="space-y-6">
               <!-- Business Plan -->
               <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
                 <div class="flex items-center space-x-4 mb-4">
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Business plan actualisé disponible ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="business_plan" value="oui" v-model="formPme.businessPlan"
+                      <input type="radio" name="business_plan" :value="true" v-model="formPme.businessPlan"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="business_plan" value="non" v-model="formPme.businessPlan"
+                      <input type="radio" name="business_plan" :value="false" v-model="formPme.businessPlan"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -986,7 +1017,7 @@
                   </div>
                 </div>
               </div>
-
+              <!-- 
               <div class="grid md:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -1003,12 +1034,12 @@
                     <span class="text-sm font-medium text-gray-700 min-w-fit">CRM ou ERP pour la gestion ?</span>
                     <div class="flex space-x-6">
                       <label class="flex items-center">
-                        <input type="radio" name="crm_erp" value="oui" v-model="formPme.crmOuErp"
+                        <input type="radio" name="crm_erp" :value="true" v-model="formPme.crmOuErp"
                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                         <span class="ml-2 text-sm text-gray-700">Oui</span>
                       </label>
                       <label class="flex items-center">
-                        <input type="radio" name="crm_erp" value="non" v-model="formPme.crmOuErp"
+                        <input type="radio" name="crm_erp" :value="false" v-model="formPme.crmOuErp"
                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                         <span class="ml-2 text-sm text-gray-700">Non</span>
                       </label>
@@ -1021,65 +1052,67 @@
                     <p class="text-xs text-gray-500 mt-1">❓ Citez le nom si applicable (Salesforce, SAP, Odoo...)</p>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="grid md:grid-cols-2 gap-6">
+              <!-- <div class="grid md:grid-cols-2 gap-6">
                 <div class="flex items-center space-x-4">
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Diversification produits/services (3 ans)
                     ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="diversification" value="oui" v-model="formPme.diversification"
+                      <input type="radio" name="diversification" :value="true" v-model="formPme.diversification"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="diversification" value="non" v-model="formPme.diversification"
+                      <input type="radio" name="diversification" :value="false" v-model="formPme.diversification"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
                   </div>
-                </div>
+                </div> -->
 
-                <div class="flex items-center space-x-4">
-                  <span class="text-sm font-medium text-gray-700 min-w-fit">Dépendance aux marchés publics ?</span>
-                  <div class="flex space-x-6">
-                    <label class="flex items-center">
-                      <input type="radio" name="marches_publics" value="oui" v-model="formPme.dependanceMarchesPublics"
-                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-                      <span class="ml-2 text-sm text-gray-700">Oui</span>
-                    </label>
-                    <label class="flex items-center">
-                      <input type="radio" name="marches_publics" value="non" v-model="formPme.dependanceMarchesPublics"
-                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-                      <span class="ml-2 text-sm text-gray-700">Non</span>
-                    </label>
-                  </div>
+              <div class="flex items-center space-x-4">
+                <span class="text-sm font-medium text-gray-700 min-w-fit">Dépendance aux marchés publics ?</span>
+                <div class="flex space-x-6">
+                  <label class="flex items-center">
+                    <input type="radio" name="marches_publics" :value="true" v-model="formPme.dependanceMarchesPublics"
+                      class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <span class="ml-2 text-sm text-gray-700">Oui</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="radio" name="marches_publics" :value="false" v-model="formPme.dependanceMarchesPublics"
+                      class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <span class="ml-2 text-sm text-gray-700">Non</span>
+                  </label>
                 </div>
               </div>
+            </div>
 
-              <p class="text-xs text-gray-500">❓ Diversification : nouveaux produits/services sur 3 exercices fiscaux |
-                Marchés publics : >50% des revenus annuels</p>
+            <p class="text-xs text-gray-500">❓ Diversification : nouveaux produits/services sur 3 exercices fiscaux |
+              Marchés publics : >50% des revenus annuels</p>
 
-              <!-- Transformation digitale -->
-              <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
-                <div class="flex items-center space-x-4 mb-4">
-                  <span class="text-sm font-medium text-gray-700 min-w-fit">Investissements en transformation digitale
-                    (3 ans) ?</span>
-                  <div class="flex space-x-6">
-                    <label class="flex items-center">
-                      <input type="radio" name="digital_transformation" value="oui"
-                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300">
-                      <span class="ml-2 text-sm text-gray-700">Oui</span>
-                    </label>
-                    <label class="flex items-center">
-                      <input type="radio" name="digital_transformation" value="non"
-                        class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300">
-                      <span class="ml-2 text-sm text-gray-700">Non</span>
-                    </label>
-                  </div>
+            <!-- Transformation digitale -->
+            <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+              <div class="flex items-center space-x-4 mb-4">
+                <span class="text-sm font-medium text-gray-700 min-w-fit">Investissements en transformation digitale
+                  (3 ans) ?</span>
+                <div class="flex space-x-6">
+                  <label class="flex items-center">
+                    <input type="radio" name="digital_transformation" :value="true"
+                      v-model="formPme.investissementDigital"
+                      class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300">
+                    <span class="ml-2 text-sm text-gray-700">Oui</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="radio" name="digital_transformation" :value="false"
+                      v-model="formPme.investissementDigital"
+                      class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300">
+                    <span class="ml-2 text-sm text-gray-700">Non</span>
+                  </label>
                 </div>
-                <p class="text-xs text-gray-500 mb-4">❓ Actions de digitalisation : site web, e-commerce, outils
+              </div>
+              <!-- <p class="text-xs text-gray-500 mb-4">❓ Actions de digitalisation : site web, e-commerce, outils
                   internes, automatisation</p>
 
                 <div>
@@ -1089,22 +1122,22 @@
                   <textarea rows="3"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                     placeholder="Décrivez vos initiatives de transformation digitale..."></textarea>
-                </div>
-              </div>
+                </div> -->
+            </div>
 
-              <!-- Manuel de procédures -->
-              <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <!-- Manuel de procédures -->
+            <!-- <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
                 <div class="flex items-center space-x-4 mb-4">
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Manuel de procédures internes disponible
                     ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="procedures_manual" value="oui"
+                      <input type="radio" name="procedures_manual" :value="true"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="procedures_manual" value="non"
+                      <input type="radio" name="procedures_manual" :value="false"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1129,10 +1162,10 @@
                     <p class="text-xs text-gray-400 mt-1">PDF, DOC - Max 10 Mo</p>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <!-- Analyse de Résilience -->
-              <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <!-- Analyse de Résilience -->
+            <!-- <div class="bg-red-50 border border-red-200 rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-red-900 mb-4">🛡️ Analyse de Résilience – Simulation de Crises
                 </h3>
                 <p class="text-sm text-red-700 mb-6">Expliquez comment votre entreprise réagirait face aux situations
@@ -1174,23 +1207,23 @@
                   <p class="text-xs text-yellow-700">💡 <strong>Conseil :</strong> Soyez réaliste et précis. Ces
                     réponses évaluent votre capacité d'anticipation et de gestion de crise.</p>
                 </div>
-              </div>
+              </div> -->
 
-            </form>
+          </div>
 
-            <div class="flex justify-between mt-8">
-              <button @click="showTab('financial', 6)"
-                class="cursor-pointer text-gray-500 px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors">
-                ← Retour
-              </button>
-              <button @click="showTab('impact', 8)"
-                class="cursor-pointer bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                Suivant : Impact Global →
-              </button>
-            </div>
+          <div class="flex justify-between mt-8">
+            <button @click="showTab('financial', 6)"
+              class="cursor-pointer text-gray-500 px-6 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+              ← Retour
+            </button>
+            <button @click="showTab('impact', 8)"
+              class="cursor-pointer bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+              Suivant : Impact Global →
+            </button>
           </div>
         </div>
       </div>
+
 
 
       <!-- Fenêtre 8: Impact Global -->
@@ -1213,7 +1246,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Emplois créés (12 derniers mois)
                   </label>
-                  <input type="0" min="0" v-model="formPme.nbEmploisCrees"
+                  <input type="0" min="0" v-model.number="formPme.nbEmploisCrees"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Nouveaux emplois permanents et temporaires</p>
                 </div>
@@ -1222,7 +1255,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Pourcentage de femmes employées (%)
                   </label>
-                  <input type="0" min="0" max="100" v-model="formPme.pourcentageFemmes"
+                  <input type="0" min="0" max="100" v-model.number="formPme.pourcentageFemmes"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Proportion actuelle dans l'effectif total</p>
                 </div>
@@ -1234,12 +1267,12 @@
                     ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="social_actions" value="oui" v-model="formPme.actionsSociales"
+                      <input type="radio" name="social_actions" :value="true" v-model="formPme.actionsSociales"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="social_actions" value="non" v-model="formPme.actionsSociales"
+                      <input type="radio" name="social_actions" :value="false" v-model="formPme.actionsSociales"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1259,12 +1292,14 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Respect normes environnementales ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="environmental_norms" value="oui" v-model="formPme.respectEnvironnement"
+                      <input type="radio" name="environmental_norms" :value="true"
+                        v-model="formPme.respectEnvironnement"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="environmental_norms" value="non" v-model="formPme.respectEnvironnement"
+                      <input type="radio" name="environmental_norms" :value="false"
+                        v-model="formPme.respectEnvironnement"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1276,12 +1311,12 @@
                     ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="certification" value="oui" v-model="formPme.certification"
+                      <input type="radio" name="certification" :value="true" v-model="formPme.certification"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="certification" value="non" v-model="formPme.certification"
+                      <input type="radio" name="certification" :value="false" v-model="formPme.certification"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1297,51 +1332,51 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input type="checkbox" name="odd" value="1" class="h-4 w-4 text-green-600"
-                      v-model="formPme.oddImpactes">
+                    <input type="checkbox" value="odd1" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">1. Pas de pauvreté</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="2"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd2" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">2. Faim "zéro"</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="3"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd3" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">3. Bonne santé</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="4"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd4" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">4. Éducation de qualité</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="5"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd5" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">5. Égalité des sexes</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="8"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd8" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">8. Travail décent</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="9"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd9" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">9. Innovation industrielle</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="12"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd12" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">12. Consommation responsable</span>
                   </label>
+
                   <label class="flex items-center space-x-2 p-2 hover:bg-green-100 rounded cursor-pointer">
-                    <input v-model="formPme.oddImpactes" type="checkbox" name="odd" value="13"
-                      class="h-4 w-4 text-green-600">
+                    <input type="checkbox" value="odd13" v-model="formPme.oddImpactes" class="h-4 w-4 text-green-600">
                     <span class="text-sm">13. Mesures climatiques</span>
                   </label>
                 </div>
+
 
                 <div class="mt-4">
                   <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -1362,24 +1397,28 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <label
                     class="flex items-center space-x-3 p-3 bg-white border border-blue-200 rounded-lg cursor-pointer hover:bg-blue-50">
-                    <input type="checkbox" name="ecological_actions" value="waste_reduction"
+                    <input type="checkbox" value="waste_reduction" v-model="formPme.actionsEcologiques"
                       class="h-4 w-4 text-blue-600">
                     <span class="text-sm">🌱 Réduction des déchets</span>
                   </label>
+
                   <label
                     class="flex items-center space-x-3 p-3 bg-white border border-blue-200 rounded-lg cursor-pointer hover:bg-blue-50">
-                    <input type="checkbox" name="ecological_actions" value="recycling" class="h-4 w-4 text-blue-600">
+                    <input type="checkbox" value="recycling" v-model="formPme.actionsEcologiques"
+                      class="h-4 w-4 text-blue-600">
                     <span class="text-sm">♻️ Recyclage</span>
                   </label>
+
                   <label
                     class="flex items-center space-x-3 p-3 bg-white border border-blue-200 rounded-lg cursor-pointer hover:bg-blue-50">
-                    <input type="checkbox" name="ecological_actions" value="renewable_energy"
+                    <input type="checkbox" value="renewable_energy" v-model="formPme.actionsEcologiques"
                       class="h-4 w-4 text-blue-600">
                     <span class="text-sm">⚡ Énergie renouvelable</span>
                   </label>
+
                   <label
                     class="flex items-center space-x-3 p-3 bg-white border border-blue-200 rounded-lg cursor-pointer hover:bg-blue-50">
-                    <input type="checkbox" name="ecological_actions" value="water_management"
+                    <input type="checkbox" value="water_management" v-model="formPme.actionsEcologiques"
                       class="h-4 w-4 text-blue-600">
                     <span class="text-sm">💧 Gestion de l'eau</span>
                   </label>
@@ -1389,11 +1428,12 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Autres actions écologiques
                   </label>
-                  <input type="text"
+                  <input type="text" v-model="formPme.autresActionsEcologiques"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Précisez d'autres initiatives...">
                 </div>
               </div>
+
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -1454,7 +1494,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Expérience du dirigeant (années) <span class="text-red-500">*</span>
                   </label>
-                  <input type="0" min="0" required v-model="formPme.experienceDirigeant"
+                  <input type="0" min="0" required v-model.number="formPme.experienceDirigeant"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                   <p class="text-xs text-gray-500 mt-1">❓ Total années d'expérience professionnelle</p>
                 </div>
@@ -1466,12 +1506,12 @@
                     ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="management_training" value="oui"
+                      <input type="radio" name="management_training" :value="true" v-model="formPme.formationDirigeant"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="management_training" value="non"
+                      <input type="radio" name="management_training" :value="false" v-model="formPme.formationDirigeant"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1482,17 +1522,12 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Équipe de direction définie ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="management_team" value="oui"
+                      <input type="radio" name="management_team" :value="true" v-model="formPme.equipeDirection"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
-                    <!-- <label class="flex items-center">
-                    <input type="radio" name="management_team" value="non" class="h">
-                    <input type="radio" name="losses" value="oui" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
-                    <span class="ml-2 text-sm text-gray-700">Oui</span>
-                  </label> -->
                     <label class="flex items-center">
-                      <input type="radio" name="losses" value="non"
+                      <input type="radio" name="management_team" :value="false" v-model="formPme.equipeDirection"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1503,12 +1538,12 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Accès crédit bancaire/microfinance ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="credit" value="oui"
+                      <input type="radio" name="credit" :value="true" v-model="formPme.accesCredit"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="credit" value="non"
+                      <input type="radio" name="credit" :value="false" v-model="formPme.accesCredit"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1519,12 +1554,12 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Garanties financières disponibles ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="guarantees" value="oui"
+                      <input type="radio" name="guarantees" :value="true" v-model="formPme.garantiesFinancieres"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="guarantees" value="non"
+                      <input type="radio" name="guarantees" :value="false" v-model="formPme.garantiesFinancieres"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1535,12 +1570,12 @@
                   <span class="text-sm font-medium text-gray-700 min-w-fit">Rapport financier annuel établi ?</span>
                   <div class="flex space-x-6">
                     <label class="flex items-center">
-                      <input type="radio" name="financial_report" value="oui"
+                      <input type="radio" name="financial_report" :value="true" v-model="formPme.rapportFinancier"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Oui</span>
                     </label>
                     <label class="flex items-center">
-                      <input type="radio" name="financial_report" value="non"
+                      <input type="radio" name="financial_report" :value="false" v-model="formPme.rapportFinancier"
                         class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                       <span class="ml-2 text-sm text-gray-700">Non</span>
                     </label>
@@ -1553,7 +1588,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Relevé bancaire (12 derniers mois) <span class="text-red-500">*</span>
                   </label>
-                  <div
+                  <div @click="openFile()"
                     class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
                     <svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor"
                       viewBox="0 0 24 24">
@@ -1570,7 +1605,7 @@
                   <label class="block text-sm font-medium text-gray-700 mb-2">
                     Dernier rapport financier (optionnel)
                   </label>
-                  <div
+                  <div @click="openFile()"
                     class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
                     <svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor"
                       viewBox="0 0 24 24">
@@ -1592,14 +1627,30 @@
               </button>
               <button @click="generateRapport()"
                 class="cursor-pointer  bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                Suivant : Générer le rapport →
+                <span v-if="isLoading">
+                  En cours de traitement ...
+                </span>
+                <span v-else>
+                  Suivant : Générer le rapport →
+                </span>
               </button>
             </div>
+
+
           </div>
         </div>
       </div>
 
     </main>
+
+    <!-- Alerte Tailwind -->
+    <div v-if="isLoading"
+      class="fixed bottom-10 bg-blue-100 border border-blue-400 text-blue-800 px-6 py-4 rounded-lg shadow-lg transition-all duration-300">
+      <p class="font-semibold">Opération en cours...</p>
+      <p class="text-sm">
+        Vous recevrez une notification par mail à <span class="font-medium">{{ formPme.email }}</span>.
+      </p>
+    </div>
   </section>
 </template>
 
@@ -1615,6 +1666,7 @@ export default {
   data() {
     return {
       isActiveItem: 'welcome',
+      isLoading: false,
       step: 1,
       formPme: {
         user_id: "",
@@ -1657,8 +1709,8 @@ export default {
         detailsActionsSociales: "",
         respectEnvironnement: false,
         certification: false,
-        oddImpactes: "",//[];
-        actionsEcologiques: "", //[],
+        oddImpactes: [],
+        actionsEcologiques: [],
         dirigeantNom: "",
         experienceDirigeant: 0,
         formationDirigeant: false,
@@ -1683,16 +1735,34 @@ export default {
     }
   },
   methods: {
-    goToDashboard(){
+    goToDashboard() {
       this.$router.push({ path: "dashbaord" })
     },
     async generateRapport() {
-
+      this.isLoading = true
       this.formPme.user_id = this.account.id
 
-      // await PmeService.createPme(this.formPme)
+      this.formPme.oddImpactes = JSON.stringify(this.formPme.oddImpactes)
+      this.formPme.actionsEcologiques = JSON.stringify(this.formPme.actionsEcologiques)
+
+      console.log("🧑‍💼🧑‍💼", this.formPme)
+
+      //==========ici
       await createScoring(this.formPme)
+
+      setTimeout(() => {
+        this.isLoading = false
+        // window.location.reload()
+      }, 5000)
+
+      //============ fin 
     },
+    // async generateRapport() {
+    //   this.isLoading = true
+    //   this.formPme.user_id = this.account.id
+    //   console.log("this.formPme", this.formPme)
+    //   // await createScoring(this.formPme)
+    // },
     generateScoring() {
       // this.$router.push({ name: "Scoring" }
 
@@ -1713,6 +1783,8 @@ export default {
     showTab(item, count) {
       this.isActiveItem = item
       this.step = count
+
+      // console.log("this.form", this.formPme)
     },
     async getAccount() {
       const resp = await AuthService.getAccount()

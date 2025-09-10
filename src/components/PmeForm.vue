@@ -347,7 +347,7 @@ watch(
 
 async function createPME(pmeData, token) {
   try {
-    const response = await axios.post('http://localhost:3000/api/pme', pmeData, {
+    const response = await axios.post('https://lementor-b-trust-pme-2.onrender.com/api/pme', pmeData, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -367,7 +367,8 @@ async function createPME(pmeData, token) {
 const handleSubmit = async () => {
   console.log("form.value", form.value);
       const token = localStorage.getItem("token")
-      const result = await createPME(form.value, token);
+  console.log("form.value", form.value)
+      // const result = await createPME(form.value, token);
     console.log('PME créée avec succès:', result);
   // emit('submit', form.value);
 };

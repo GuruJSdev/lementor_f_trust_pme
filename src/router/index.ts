@@ -7,7 +7,7 @@ import DashboardPage from '../pages/DashboardPage.vue';
 // import { useAuthStore } from '@/stores/auth';
 
 const routes:any = [
-  { path: '/', redirect: '/login' },
+  { path: '/',component: LoginPage},
   { path: '/login', component: LoginPage },
   { path: '/register', component: RegisterPage },
   {

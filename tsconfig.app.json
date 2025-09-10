@@ -12,7 +12,7 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue"
-  ],
+, "src/utils/rapport.ts"  ],
   "exclude": ["node_modules"]
 }
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export class PmeService {
-    static baseUrl = "http://localhost:3000/api"; // modifie si besoin
+    static baseUrl = "https://lementor-b-trust-pme-2.onrender.com/api"; // modifie si besoin
 
     // Récupère les PME d'un utilisateur avec filtres
     static async fetchPmes(userId: string, filters: any = {}) {
